@@ -19,6 +19,7 @@
   "CommandSuspender": "suspender",
   "CommandVest": "vest",
   "CommandCoat": "coat",
+  "CommandCoatClosed": "coatclosed",
   "CommandPoncho": "poncho",
   "CommandCloak": "cloack",
   "CommandGlove": "glove",
@@ -372,5 +373,5 @@
   "SatchelsDesc": "Choose the satchels",
   "GunbeltAccsDesc": "Choose the gunbelt accessories",
   "FinishDesc": "Make sure you have everything chosen as you want, you will have to go to a clothing store in order to change your clothes",
-  "TipFinal": "Welcome to Vorp , we hope that your stay is the most entertaining."
+  "TipFinal": "Welcome to VORP RP, we hope that your stay is the most entertaining."
 }
