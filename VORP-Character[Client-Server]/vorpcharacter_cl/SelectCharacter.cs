@@ -366,7 +366,42 @@ namespace vorpcharacter_cl
                 CreateCharacter.texture_types["unk_arg"] = 0;
             }
             //End
-            CreateCharacter.ApplyDefaultSkinCanaryEdition(ppid);
+            if (API.IsPedMale(API.PlayerPedId()))
+            {
+                string comp_body_male = "0x" + GetConfig.Config["Male"][0]["Body"][0].ToString();
+                int comp_body_male_int = Convert.ToInt32(comp_body_male, 16);
+                string comp_heads_male = "0x" + GetConfig.Config["Male"][0]["Heads"][0].ToString();
+                int comp_heads_male_int = Convert.ToInt32(comp_heads_male, 16);
+                string comp_legs_male = "0x" + GetConfig.Config["Male"][0]["Legs"][0].ToString();
+                int comp_legs_male_int = Convert.ToInt32(comp_legs_male, 16);
+
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), SkinsUtils.EYES_MALE.ElementAt(0), true, true, true);
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_heads_male_int, true, true, true);
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_body_male_int, true, true, true);
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_legs_male_int, true, true, true);
+
+                Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x3F1F01E5, 0);
+
+                Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
+            }
+            else
+            {
+                string comp_body_female = "0x" + GetConfig.Config["Female"][0]["Body"][0].ToString();
+                int comp_body_female_int = Convert.ToInt32(comp_body_female, 16);
+                string comp_heads_female = "0x" + GetConfig.Config["Female"][0]["Heads"][0].ToString();
+                int comp_heads_female_int = Convert.ToInt32(comp_heads_female, 16);
+                string comp_legs_female = "0x" + GetConfig.Config["Female"][0]["Legs"][0].ToString();
+                int comp_legs_female_int = Convert.ToInt32(comp_legs_female, 16);
+
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), SkinsUtils.EYES_FEMALE.ElementAt(0), true, true, true);
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_heads_female_int, true, true, true);
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_body_female_int, true, true, true);
+                Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_legs_female_int, true, true, true);
+
+                Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x3F1F01E5, 0);
+
+                Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
+            }
             //LoadSkin
             Function.Call((Hash)0xD3A7B003ED343FD9, ppid, LoadPlayer.ConvertValue(skin["HeadType"]), true, true, true);
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
@@ -464,16 +499,17 @@ namespace vorpcharacter_cl
 
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
 
-            await Delay(1000);
+            await Delay(500);
             SetPlayerComponent(skin["sex"], 0x9925C067, "Hat", cloths);
             SetPlayerComponent(skin["sex"], 0x5E47CA6, "EyeWear", cloths);
             SetPlayerComponent(skin["sex"], 0x7505EF42, "Mask", cloths);
             SetPlayerComponent(skin["sex"], 0x5FC29285, "NeckWear", cloths);
-            SetPlayerComponent(skin["sex"], 0x7A96FACA, "NeckTies", cloths);
-            SetPlayerComponent(skin["sex"], 0x2026C46D, "Shirt", cloths);
             SetPlayerComponent(skin["sex"], 0x877A2CF7, "Suspender", cloths);
             SetPlayerComponent(skin["sex"], 0x485EE834, "Vest", cloths);
             SetPlayerComponent(skin["sex"], 0xE06D30CE, "Coat", cloths);
+            SetPlayerComponent(skin["sex"], 0x0662AC34, "CoatClosed", cloths);
+            SetPlayerComponent(skin["sex"], 0x2026C46D, "Shirt", cloths);
+            SetPlayerComponent(skin["sex"], 0x7A96FACA, "NeckTies", cloths);
             SetPlayerComponent(skin["sex"], 0xAF14310B, "Poncho", cloths);
             SetPlayerComponent(skin["sex"], 0x3C1A74CD, "Cloak", cloths);
             SetPlayerComponent(skin["sex"], 0xEABE0032, "Glove", cloths);
