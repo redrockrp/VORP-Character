@@ -735,9 +735,9 @@ namespace vorpcharacter_cl
 
             TriggerEvent("vorp:setInstancePlayer", false);
 
-            API.DoScreenFadeIn(500);
+            await Delay(8000);
 
-            await Delay(1000);
+            API.DoScreenFadeIn(500);
 
             TriggerEvent("vorp:TipBottom", GetConfig.Langs["TipFinal"], 15000);
         }

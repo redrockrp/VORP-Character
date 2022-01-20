@@ -83,7 +83,7 @@ namespace vorpcharacter_cl
                 cloths[s.Key] = ConvertValue(s.Value.ToString());
             }
 
-            await Delay(500);
+            await Delay(100);
 
             cache_skin = skin;
             cache_cloths = cloths;
@@ -156,6 +156,7 @@ namespace vorpcharacter_cl
                 Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_legs_male_int, true, true, true);
 
                 Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x3F1F01E5, 0);
+                Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x1D4C528A, 0);
 
                 Function.Call((Hash)0xCC8CA3E88256E58F, pPedID, 0, 1, 1, 1, false);
             }
@@ -174,6 +175,7 @@ namespace vorpcharacter_cl
                 Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_legs_female_int, true, true, true);
 
                 Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x3F1F01E5, 0);
+                Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x1D4C528A, 0);
 
                 Function.Call((Hash)0xCC8CA3E88256E58F, pPedID, 0, 1, 1, 1, false);
             }
@@ -187,166 +189,126 @@ namespace vorpcharacter_cl
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x84D6, float.Parse(skin["HeadSize"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x3303, float.Parse(skin["EyeBrowH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x2FF9, float.Parse(skin["EyeBrowW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x4AD1, float.Parse(skin["EyeBrowD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xC04F, float.Parse(skin["EarsH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xB6CE, float.Parse(skin["EarsW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x2844, float.Parse(skin["EarsD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xED30, float.Parse(skin["EarsL"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x8B2B, float.Parse(skin["EyeLidH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x1B6B, float.Parse(skin["EyeLidW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xEE44, float.Parse(skin["EyeD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xD266, float.Parse(skin["EyeAng"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xA54E, float.Parse(skin["EyeDis"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xDDFB, float.Parse(skin["EyeH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x6E7F, float.Parse(skin["NoseW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x3471, float.Parse(skin["NoseS"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x03F5, float.Parse(skin["NoseH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x34B1, float.Parse(skin["NoseAng"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xF156, float.Parse(skin["NoseC"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x561E, float.Parse(skin["NoseDis"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x6A0B, float.Parse(skin["CheekBonesH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xABCF, float.Parse(skin["CheekBonesW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x358D, float.Parse(skin["CheekBonesD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xF065, float.Parse(skin["MouthW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xAA69, float.Parse(skin["MouthD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x7AC3, float.Parse(skin["MouthX"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x410D, float.Parse(skin["MouthY"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x1A00, float.Parse(skin["ULiphH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x91C1, float.Parse(skin["ULiphW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xC375, float.Parse(skin["ULiphD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xBB4D, float.Parse(skin["LLiphH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xB0B0, float.Parse(skin["LLiphW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x5D16, float.Parse(skin["LLiphD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x8D0A, float.Parse(skin["JawH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xEBAE, float.Parse(skin["JawW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x1DF6, float.Parse(skin["JawD"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0x3C0F, float.Parse(skin["ChinH"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xC3B2, float.Parse(skin["ChinW"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x5653AB26C82938CF, pPedID, 0xE323, float.Parse(skin["ChinD"]));
             await Delay(10);
 
             Function.Call((Hash)0xD3A7B003ED343FD9, pPedID, ConvertValue(skin["Eyes"]), true, true, true);
             await Delay(10);
-            
-                        
+
             Function.Call((Hash)0x1902C4CFCC5BE57C, pPedID, ConvertValue(skin["Body"]));
             await Delay(10);
-            
 
             Function.Call((Hash)0x1902C4CFCC5BE57C, pPedID, ConvertValue(skin["Waist"]));
 
@@ -413,7 +375,7 @@ namespace vorpcharacter_cl
 
             Function.Call((Hash)0xC6258F41D86676E0, pPedID, 0, pHealth);
 
-            IsLoaded();
+            await IsLoaded();
         }
 
 
@@ -457,7 +419,7 @@ namespace vorpcharacter_cl
 
         private async Task IsLoaded()
         {
-            await Delay(500);
+            await Delay(400);
             bool loaded = Function.Call<bool>((Hash)0xA0BC8FAED8CFEB3C, API.PlayerPedId());
             if (!loaded)
             {

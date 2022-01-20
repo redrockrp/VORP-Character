@@ -162,7 +162,7 @@ namespace vorpcharacter_cl
 
             StartSwapCharacter();
 
-            await Delay(10000);
+            await Delay(15000);
 
             API.DoScreenFadeIn(1000);
         }
@@ -214,7 +214,7 @@ namespace vorpcharacter_cl
                 float heading = jPos["heading"].ToObject<float>();
                 TriggerEvent("vorp:initCharacter", playerCoords, heading, isDead);
                 // It is necessary so that the world has time to load and the player does not have to see empty textures
-                await Delay(10000);
+                await Delay(15000);
                 API.DoScreenFadeIn(1000);
             }
             catch (Exception ex)
@@ -342,7 +342,7 @@ namespace vorpcharacter_cl
 
             uint model_hash = (uint)API.GetHashKey(skin["sex"]);
             await Utils.Miscellanea.LoadModel(model_hash);
-            await Delay(10);
+            await Delay(500);
             ppid = API.CreatePed(model_hash, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true); //Inside house
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
 
@@ -365,7 +365,7 @@ namespace vorpcharacter_cl
                 CreateCharacter.texture_types["texture_opacity"] = 1.0f;
                 CreateCharacter.texture_types["unk_arg"] = 0;
             }
-            //End
+            await Delay(350);
             if (API.IsPedMale(API.PlayerPedId()))
             {
                 string comp_body_male = "0x" + GetConfig.Config["Male"][0]["Body"][0].ToString();
@@ -381,6 +381,7 @@ namespace vorpcharacter_cl
                 Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_legs_male_int, true, true, true);
 
                 Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x3F1F01E5, 0);
+                Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x1D4C528A, 0);
 
                 Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
             }
@@ -399,6 +400,7 @@ namespace vorpcharacter_cl
                 Function.Call((Hash)0xD3A7B003ED343FD9, API.PlayerPedId(), comp_legs_female_int, true, true, true);
 
                 Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x3F1F01E5, 0);
+                Function.Call((Hash)0xD710A5007C2AC539, API.PlayerPedId(), 0x1D4C528A, 0);
 
                 Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
             }
@@ -499,6 +501,21 @@ namespace vorpcharacter_cl
 
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
 
+            //Load Face Texture
+            await Delay(100);
+            CreateCharacter.toggleOverlayChange("eyebrows", int.Parse(skin["eyebrows_visibility"]), int.Parse(skin["eyebrows_tx_id"]), 0, 0, 0, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("scars", int.Parse(skin["scars_visibility"]), int.Parse(skin["scars_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("spots", int.Parse(skin["spots_visibility"]), int.Parse(skin["spots_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("disc", int.Parse(skin["disc_visibility"]), int.Parse(skin["disc_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("complex", int.Parse(skin["complex_visibility"]), int.Parse(skin["complex_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("acne", int.Parse(skin["acne_visibility"]), int.Parse(skin["acne_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("ageing", int.Parse(skin["ageing_visibility"]), int.Parse(skin["ageing_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("freckles", int.Parse(skin["freckles_visibility"]), int.Parse(skin["freckles_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("moles", int.Parse(skin["moles_visibility"]), int.Parse(skin["moles_tx_id"]), 0, 0, 1, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("grime", int.Parse(skin["grime_visibility"]), int.Parse(skin["grime_tx_id"]), 0, 0, 0, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("lipsticks", int.Parse(skin["lipsticks_visibility"]), int.Parse(skin["lipsticks_tx_id"]), 0, 0, 0, 1.0f, 0, int.Parse(skin["lipsticks_palette_id"]), int.Parse(skin["lipsticks_palette_color_primary"]), 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("shadows", int.Parse(skin["shadows_visibility"]), int.Parse(skin["shadows_tx_id"]), 0, 0, 0, 1.0f, 0, int.Parse(skin["shadows_palette_id"]), int.Parse(skin["shadows_palette_color_primary"]), 0, 0, 0, 1.0f);
+
             await Delay(500);
             SetPlayerComponent(skin["sex"], 0x9925C067, "Hat", cloths);
             SetPlayerComponent(skin["sex"], 0x5E47CA6, "EyeWear", cloths);
@@ -534,7 +551,6 @@ namespace vorpcharacter_cl
             SetPlayerComponent(skin["sex"], 0x83887E88, "Loadouts", cloths);
             SetPlayerComponent(skin["sex"], 0x79D7DF96, "Accessories", cloths);
             SetPlayerComponent(skin["sex"], 0x94504D26, "Satchels", cloths);
-
 
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
 
