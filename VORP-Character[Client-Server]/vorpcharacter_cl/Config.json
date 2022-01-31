@@ -3,6 +3,8 @@
 
   "StartingCoords": [ -179.71, 634.19, 114.089 ], //X, Y, Z
   "Heading": [ 55.416 ],
+  "CharacterSelectionFinalCoords": [ 1696.17, 1508.474, 147.85 ],
+  "CharacterSelectionStartCoords": [ 1697.74, 1510.202, 147.87 ],
 
   // DO NOT TOUCH THIS
   "Male": [
