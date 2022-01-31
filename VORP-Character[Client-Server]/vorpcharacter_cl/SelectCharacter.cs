@@ -22,10 +22,15 @@ namespace vorpcharacter_cl
         dynamic myChars = null;
         private static bool isInCharacterSelector = false;
         private int tagId = 0;
-        private static bool swappingChar = true; 
+        private static bool swappingChar = true;
+        private Vector3 CharacterSelectionFinalCoords = null;
+        private Vector3 CharacterSelectionStartCoords = null;
 
         public SelectCharacter()
         {
+            CharacterSelectionFinalCoords = new Vector3(GetConfig.Config["CharacterSelectionFinalCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][2].ToObject<float>());
+            CharacterSelectionStartCoords = new Vector3(GetConfig.Config["CharacterSelectionStartCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][2].ToObject<float>());
+
             EventHandlers["vorpcharacter:selectCharacter"] += new Action<dynamic>(LoadCharacters);
             EventHandlers["vorpcharacter:spawnUniqueCharacter"] += new Action<dynamic>(SpawnCharacter);
         }
@@ -74,9 +79,9 @@ namespace vorpcharacter_cl
             int character_1 = API.CreatePed(hashmodel, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true);
             Function.Call((Hash)0x283978A15512B2FE, character_1, true);
             await Delay(1000);
-            API.TaskGoToCoordAnyMeans(character_1, 1696.17f, 1508.474f, 147.85f, 0.5f, 0, false, 524419, -1f);
+            API.TaskGoToCoordAnyMeans(character_1, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 0.5f, 0, false, 524419, -1f);
             await Delay(8000);
-            API.TaskGoToCoordAnyMeans(character_1, 1697.74f, 1510.202f, 147.87f, 0.5f, 0, false, 524419, -1f);
+            API.TaskGoToCoordAnyMeans(character_1, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Y, 0.5f, 0, false, 524419, -1f);
             await Delay(5000);
             API.DeletePed(ref character_1);
         }
@@ -116,7 +121,8 @@ namespace vorpcharacter_cl
             API.PromptSetEnabled(CreatePrompt, 0);
             API.PromptSetVisible(CreatePrompt, 0);
 
-            API.TaskGoToCoordAnyMeans(ppid, 1697.74f, 1510.202f, 147.87f, 0.8f, 0, false, 524419, -1f);
+            //Начальная точка
+            API.TaskGoToCoordAnyMeans(ppid, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Y, 0.8f, 0, false, 524419, -1f);
             await Delay(2000);
             Function.Call((Hash)0xA0D7CE5F83259663, tagId, "");
             Function.Call((Hash)0x839BFD7D7E49FE09, tagId);
@@ -126,7 +132,8 @@ namespace vorpcharacter_cl
             Function.Call((Hash)0xA0D7CE5F83259663, tagId, myChars[selectedChar].firstname + " " + myChars[selectedChar].lastname);
             Function.Call((Hash)0x5F57522BC1EB9D9D, tagId, 0);
             await Delay(500);
-            API.TaskGoToCoordAnyMeans(ppid, 1696.17f, 1508.474f, 147.85f, 0.8f, 0, false, 524419, -1f);
+            //Конечная точка
+            API.TaskGoToCoordAnyMeans(ppid, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 0.8f, 0, false, 524419, -1f);
 
             API.PromptSetEnabled(DeletePrompt, 1);
             API.PromptSetVisible(DeletePrompt, 1);
@@ -147,7 +154,7 @@ namespace vorpcharacter_cl
             DrawInformation();
             Function.Call(Hash.SET_CLOCK_TIME, 12, 00, 0);
             API.SetClockTime(12, 00, 00);
-
+            //Артур морган
             API.SetEntityCoords(API.PlayerPedId(), 1687.03f, 1507.06f, 145.60f, false, false, false, false);
             
             myChars = myCharacters;
@@ -167,7 +174,8 @@ namespace vorpcharacter_cl
         {
             while (isInCharacterSelector)
             {
-                API.DrawLightWithRange(1696.17f, 1508.474f, 147.85f, 255, 255, 255, 8.0f, 250.0f);
+                //Финальная точка для света
+                API.DrawLightWithRange(CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 255, 255, 255, 8.0f, 250.0f);
                 await Utils.Miscellanea.DrawTxt(GetConfig.Langs["PressSelectInfo"], 0.5f, 0.90f, 0.75f, 0.70f, 255, 255, 255, 255, true, false);
                 await Delay(0);
             }
@@ -292,7 +300,7 @@ namespace vorpcharacter_cl
                     {
                         myChars.RemoveAt(selectedChar);
 
-                        Function.Call((Hash)0x7D6F58F69DA92530, 1696.17f, 1508.474f, 147.85f, 26, 50.0f, true, false, true);
+                        Function.Call((Hash)0x7D6F58F69DA92530, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 26, 50.0f, true, false, true);
 
                         if (selectedChar == 0)
                         {
