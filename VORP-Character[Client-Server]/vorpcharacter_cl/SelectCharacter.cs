@@ -23,8 +23,8 @@ namespace vorpcharacter_cl
         private static bool isInCharacterSelector = false;
         private int tagId = 0;
         private static bool swappingChar = true;
-        private Vector3 CharacterSelectionFinalCoords = null;
-        private Vector3 CharacterSelectionStartCoords = null;
+        private Vector3 CharacterSelectionFinalCoords = new Vector3(1696.17f, 1508.474f, 147.8f);
+        private Vector3 CharacterSelectionStartCoords = new Vector3(1697.74f, 1510.202f, 147.87f);
 
         public SelectCharacter()
         {
@@ -76,7 +76,8 @@ namespace vorpcharacter_cl
         {
             uint hashmodel = (uint)API.GetHashKey("mp_male");
             await Miscellanea.LoadModel(hashmodel);
-            int character_1 = API.CreatePed(hashmodel, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true);
+            //int character_1 = API.CreatePed(hashmodel, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true);
+            int character_1 = API.CreatePed(hashmodel, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Z, 116.70f, false, false, true, true);
             Function.Call((Hash)0x283978A15512B2FE, character_1, true);
             await Delay(1000);
             API.TaskGoToCoordAnyMeans(character_1, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 0.5f, 0, false, 524419, -1f);
@@ -155,12 +156,14 @@ namespace vorpcharacter_cl
             Function.Call(Hash.SET_CLOCK_TIME, 12, 00, 0);
             API.SetClockTime(12, 00, 00);
             //Артур морган
-            API.SetEntityCoords(API.PlayerPedId(), 1687.03f, 1507.06f, 145.60f, false, false, false, false);
+            //API.SetEntityCoords(API.PlayerPedId(), 1687.03f, 1507.06f, 145.60f, false, false, false, false);
+            API.SetEntityCoords(API.PlayerPedId(), 2542.5659f, -1307.309f, 49.216f, false, false, false, false);
 
             myChars = myCharacters;
 
             //mainCamera = API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -560.65f, -3776.10f, 239.45f, -15.05f, 0f, -92.71f, 51.00f, false, 0);
-            mainCamera = API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 1693.301f, 1507.959f, 148.84f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
+            //mainCamera = API.CreateCamWithParams()"DEFAULT_SCRIPTED_CAMERA", 1693.301f, 1507.959f, 148.84f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
+            mainCamera = API.CreateCamWithParams()"DEFAULT_SCRIPTED_CAMERA", 2546.91f, -1304.16f, 49.14f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
 
 
             API.SetCamActive(mainCamera, true);
@@ -353,7 +356,9 @@ namespace vorpcharacter_cl
             uint model_hash = (uint)API.GetHashKey(skin["sex"]);
             await Utils.Miscellanea.LoadModel(model_hash);
             await Delay(500);
-            ppid = API.CreatePed(model_hash, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true); //Inside house
+            //ppid = API.CreatePed(model_hash, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true); //Inside house
+            ppid = API.CreatePed(model_hash, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Z, 116.70f, false, false, true, true); //Inside house
+
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
 
             //PreLoad TextureFace
