@@ -163,7 +163,7 @@ namespace vorpcharacter_cl
 
             //mainCamera = API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -560.65f, -3776.10f, 239.45f, -15.05f, 0f, -92.71f, 51.00f, false, 0);
             //mainCamera = API.CreateCamWithParams()"DEFAULT_SCRIPTED_CAMERA", 1693.301f, 1507.959f, 148.84f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
-            mainCamera = API.CreateCamWithParams()"DEFAULT_SCRIPTED_CAMERA", 2546.91f, -1304.16f, 49.14f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
+            mainCamera = API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 2546.91f, -1304.16f, 49.14f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
 
 
             API.SetCamActive(mainCamera, true);
