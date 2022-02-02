@@ -3,8 +3,15 @@
 
   "StartingCoords": [ -179.71, 634.19, 114.089 ], //X, Y, Z
   "Heading": [ 55.416 ],
-  "CharacterSelectionFinalCoords": [ 1696.17, 1508.474, 147.85 ],
-  "CharacterSelectionStartCoords": [ 1697.74, 1510.202, 147.87 ],
+  "CharacterSelectionStartCoords": [ 2541.3, -1312.5, 49.21 ],
+  "CharacterSelectionMiddleCoords": [ 2546.773, -1312.89, 49.21 ],
+  "CharacterSelectionWorshipCoords": [ 2546.770, -1312.199, 49.216 ],
+  "CharacterSelectionFinalCoords": [ 2550, -1309, 48.95 ],
+
+  "CharacterSelectionHeading": [ 0.00 ],
+
+  "MainCamCoords": [ 2546.97, -1308.21, 48.92 ],
+  "MainCamRotations": [ 4.51, 0, 179.56, 36 ],
 
   // DO NOT TOUCH THIS
   "Male": [
