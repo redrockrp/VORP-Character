@@ -23,14 +23,30 @@ namespace vorpcharacter_cl
         private static bool isInCharacterSelector = false;
         private int tagId = 0;
         private static bool swappingChar = true;
-        private Vector3 CharacterSelectionFinalCoords = new Vector3(1696.17f, 1508.474f, 147.8f);
-        private Vector3 CharacterSelectionStartCoords = new Vector3(1697.74f, 1510.202f, 147.87f);
+
+        private List<string> emotes = new List<string> {
+            "KIT_EMOTE_GREET_FANCY_BOW_1",                  //--  0x8186AA35      -2121881035
+            "KIT_EMOTE_GREET_FLYING_KISS_1",                //--  0x4F3E0424      1329464356      --new
+            "KIT_EMOTE_GREET_GENTLEWAVE_1",                 //--  0x35B5A903      901097731
+            "KIT_EMOTE_GREET_GET_OVER_HERE_1",              //--  0x9CA62011      -1666834415
+            "KIT_EMOTE_GREET_GLAD_1",                       //--  0x1F3549C4      523585988
+            "KIT_EMOTE_GREET_HAND_SHAKE_1",                 //--  0x6A662B8A      1785080714      --new
+            "KIT_EMOTE_GREET_HAT_FLICK_1",                  //--  0xE18A99A1      -511010399
+            "KIT_EMOTE_GREET_HAT_TIP_1",                    //--  0xA927A00F      -1457020913
+            "KIT_EMOTE_GREET_HEY_YOU_1",                    //--  0x3196F0E3      831975651
+            "KIT_EMOTE_GREET_OUTPOUR_1",                    //--  0xE68763B3      -427334733      --new
+            "KIT_EMOTE_GREET_RESPECTFUL_BOW_1",             //--  0x949C021C      -1801715172
+            "KIT_EMOTE_GREET_ROUGH_HOUSING_1",              //--  0xAD277C3D      -1389921219  --new
+            "KIT_EMOTE_GREET_SEVEN_1",                      //--  0x3CB5E70E      1018554126
+            "KIT_EMOTE_GREET_SUBTLE_WAVE_1",                //--  0xA38D1E64      -1551032732
+            "KIT_EMOTE_GREET_TADA_1",                       //--  0xE4746943      -462132925
+            "KIT_EMOTE_GREET_THUMBSUP_1",                   //--  0x1960746B      425751659
+            "KIT_EMOTE_GREET_TOUGH_1",                      //--  0x700DD5CB      1879954891
+            "KIT_EMOTE_GREET_WAVENEAR_1",                   //--  0xEBC75584      -339257980
+        };
 
         public SelectCharacter()
         {
-            CharacterSelectionFinalCoords = new Vector3(GetConfig.Config["CharacterSelectionFinalCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][2].ToObject<float>());
-            CharacterSelectionStartCoords = new Vector3(GetConfig.Config["CharacterSelectionStartCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][2].ToObject<float>());
-
             EventHandlers["vorpcharacter:selectCharacter"] += new Action<dynamic>(LoadCharacters);
             EventHandlers["vorpcharacter:spawnUniqueCharacter"] += new Action<dynamic>(SpawnCharacter);
         }
@@ -135,6 +151,9 @@ namespace vorpcharacter_cl
             await Delay(500);
             //Конечная точка
             API.TaskGoToCoordAnyMeans(ppid, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 0.8f, 0, false, 524419, -1f);
+            var emote_category = 3;
+            Function.Call((Hash)0xB31A277C1AC7B7FF, ppid, emote_category, 2, API.GetHashKey(emotes[new Random(DateTime.Now.Millisecond).Next(0, emotes.Count - 1)]), 0, 0, 0, 0, 0);
+            await Delay(2000);
 
             API.PromptSetEnabled(DeletePrompt, 1);
             API.PromptSetVisible(DeletePrompt, 1);
