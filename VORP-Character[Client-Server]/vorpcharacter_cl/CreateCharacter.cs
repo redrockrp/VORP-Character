@@ -59,7 +59,7 @@ namespace vorpcharacter_cl
                     skinPlayer[$"{name}_visibility"] = visibility;
                     skinPlayer[$"{name}_tx_id"] = tx_id;
 
-                    if (name.Contains("shadows") || name.Contains("lipsticks"))
+                    if (name.Contains("shadows") || name.Contains("lipsticks") || name.Equals("hair") || name.Equals("beardstabble"))
                     {
                         skinPlayer[$"{name}_palette_id"] = palette_id;
                         skinPlayer[$"{name}_palette_color_primary"] = palette_color_primary;
@@ -80,7 +80,7 @@ namespace vorpcharacter_cl
                             SkinsUtils.overlay_all_layers[i]["palette_color_secondary"] = palette_color_secondary;
                             SkinsUtils.overlay_all_layers[i]["palette_color_tertiary"] = palette_color_tertiary;
                         }
-                        if (name.Equals("shadows") || name.Equals("eyeliners") || name.Equals("lipsticks"))
+                        if (name.Equals("shadows") || name.Equals("eyeliners") || name.Equals("lipsticks") || name.Equals("beardstabble"))
                         {
                             SkinsUtils.overlay_all_layers[i]["var"] = var;
                             SkinsUtils.overlay_all_layers[i]["tx_id"] = (int)SkinsUtils.overlays_info[name][0]["id"];
@@ -247,6 +247,14 @@ namespace vorpcharacter_cl
             { "shadows_tx_id", 0 },
             { "shadows_palette_id", 0 },
             { "shadows_palette_color_primary", 0 },
+            
+            { "hair_visibility", 0 },
+            { "hair_tx_id", 0 },
+            { "hair_palette_id", 0 },
+
+            { "beardstabble_visibility", 0 },
+            { "beardstabble_tx_id", 0 },
+            { "beardstabble_palette_id", 0 }
         };
 
         public static Dictionary<string, object> clothesPlayer = new Dictionary<string, object>() {
