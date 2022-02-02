@@ -419,6 +419,7 @@ namespace vorpcharacter_cl
             Vector3 characterSelectionStartCoords = new Vector3(GetConfig.Config["CharacterSelectionStartCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][2].ToObject<float>());
             //ppid = API.CreatePed(model_hash, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true); //Inside house
             ppid = API.CreatePed(model_hash, characterSelectionStartCoords.X, characterSelectionStartCoords.Y, characterSelectionStartCoords.Z, 116.70f, false, false, true, true); //Inside house
+            API.DisablePedPainAudio(ppid, true);
 
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
 
