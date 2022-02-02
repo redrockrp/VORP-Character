@@ -90,13 +90,16 @@ namespace vorpcharacter_cl
 
         public async Task StartAnim()
         {
+            Vector3 characterSelectionFinalCoords = new Vector3(GetConfig.Config["CharacterSelectionFinalCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][2].ToObject<float>());
+            Vector3 CharacterSelectionStartCoords = new Vector3(GetConfig.Config["CharacterSelectionStartCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][2].ToObject<float>());
+
             uint hashmodel = (uint)API.GetHashKey("mp_male");
             await Miscellanea.LoadModel(hashmodel);
             //int character_1 = API.CreatePed(hashmodel, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true);
             int character_1 = API.CreatePed(hashmodel, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Z, 116.70f, false, false, true, true);
             Function.Call((Hash)0x283978A15512B2FE, character_1, true);
             await Delay(1000);
-            API.TaskGoToCoordAnyMeans(character_1, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 0.5f, 0, false, 524419, -1f);
+            API.TaskGoToCoordAnyMeans(character_1, characterSelectionFinalCoords.X, characterSelectionFinalCoords.Y, characterSelectionFinalCoords.Z, 0.5f, 0, false, 524419, -1f);
             await Delay(8000);
             API.TaskGoToCoordAnyMeans(character_1, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Y, 0.5f, 0, false, 524419, -1f);
             await Delay(5000);
@@ -127,6 +130,33 @@ namespace vorpcharacter_cl
 
         }
 
+        public async Task MoveToCoords(Vector3 target)
+        {
+            Vector3 pedCoord = API.GetEntityCoords(ppid, false, true);
+
+            float distance = API.GetDistanceBetweenCoords(pedCoord.X, pedCoord.Y, pedCoord.Z, target.X, target.Y, target.Z, false);
+            int counter = 0;
+            float lastDistance = 0;
+            while (distance > 0.3f && counter < 10)
+            {
+                API.TaskGoToCoordAnyMeans(ppid, target.X, target.Y, target.Z, 0.8f, 0, false, 524419, -1f);
+                await Delay(500);
+                while (API.IsPedWalking(ppid)) { await Delay(500); }
+                pedCoord = API.GetEntityCoords(ppid, false, true);
+                distance = API.GetDistanceBetweenCoords(pedCoord.X, pedCoord.Y, pedCoord.Z, target.X, target.Y, target.Z, false);
+
+                if (lastDistance == distance)
+                {
+                    counter++;
+                }
+                else
+                {
+                    counter = 0;
+                }
+                lastDistance = distance;
+            }
+        }
+
         public async Task StartSwapCharacter()
         {
             swappingChar = true;
@@ -138,9 +168,15 @@ namespace vorpcharacter_cl
             API.PromptSetEnabled(CreatePrompt, 0);
             API.PromptSetVisible(CreatePrompt, 0);
 
-            //Начальная точка
-            API.TaskGoToCoordAnyMeans(ppid, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Y, 0.8f, 0, false, 524419, -1f);
-            await Delay(2000);
+            Vector3 characterSelectionFinalCoords = new Vector3(GetConfig.Config["CharacterSelectionFinalCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][2].ToObject<float>());
+            Vector3 characterSelectionMiddleCoords = new Vector3(GetConfig.Config["CharacterSelectionMiddleCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionMiddleCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionMiddleCoords"][2].ToObject<float>());
+            Vector3 characterSelectionWorshipCoords = new Vector3(GetConfig.Config["CharacterSelectionWorshipCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionWorshipCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionWorshipCoords"][2].ToObject<float>());
+
+            if (ppid != 0)
+            {
+                await MoveToCoords(characterSelectionFinalCoords);
+            }
+
             Function.Call((Hash)0xA0D7CE5F83259663, tagId, "");
             Function.Call((Hash)0x839BFD7D7E49FE09, tagId);
             API.DeletePed(ref ppid);
@@ -148,9 +184,12 @@ namespace vorpcharacter_cl
             tagId = Function.Call<int>((Hash)0x53CB4B502E1C57EA, ppid, $"{GetConfig.Langs["MoneyTag"]}: ~COLOR_WHITE~$" + "~COLOR_REPLAY_GREEN~" + myChars[selectedChar].money, false, false, "", 0);
             Function.Call((Hash)0xA0D7CE5F83259663, tagId, myChars[selectedChar].firstname + " " + myChars[selectedChar].lastname);
             Function.Call((Hash)0x5F57522BC1EB9D9D, tagId, 0);
-            await Delay(500);
-            //Конечная точка
-            API.TaskGoToCoordAnyMeans(ppid, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 0.8f, 0, false, 524419, -1f);
+            await Delay(300);
+
+            await MoveToCoords(characterSelectionMiddleCoords);
+            await MoveToCoords(characterSelectionWorshipCoords);
+
+            //Function.Call((Hash)0x5AB552C6, ppid, "ai_gestures@john@standing@speaker", "john_greet_bow_l_001", 1.0, 8.0, 2000, 0, 0.0, false, false, false);
             var emote_category = 3;
             Function.Call((Hash)0xB31A277C1AC7B7FF, ppid, emote_category, 2, API.GetHashKey(emotes[new Random(DateTime.Now.Millisecond).Next(0, emotes.Count - 1)]), 0, 0, 0, 0, 0);
             await Delay(2000);
@@ -159,7 +198,7 @@ namespace vorpcharacter_cl
             API.PromptSetVisible(DeletePrompt, 1);
             API.PromptSetEnabled(CreatePrompt, 1);
             API.PromptSetVisible(CreatePrompt, 1);
-            await Delay(500);
+            await Delay(300);
             swappingChar = false;
         }
 
@@ -176,14 +215,15 @@ namespace vorpcharacter_cl
             API.SetClockTime(12, 00, 00);
             //Артур морган
             //API.SetEntityCoords(API.PlayerPedId(), 1687.03f, 1507.06f, 145.60f, false, false, false, false);
-            API.SetEntityCoords(API.PlayerPedId(), 2542.5659f, -1307.309f, 49.216f, false, false, false, false);
+            API.SetEntityCoords(API.PlayerPedId(), 2546.91f, -1304.16f, 49.1f, false, false, false, false);
 
             myChars = myCharacters;
 
             //mainCamera = API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -560.65f, -3776.10f, 239.45f, -15.05f, 0f, -92.71f, 51.00f, false, 0);
             //mainCamera = API.CreateCamWithParams()"DEFAULT_SCRIPTED_CAMERA", 1693.301f, 1507.959f, 148.84f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
-            mainCamera = API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 2546.91f, -1304.16f, 49.14f, -13.82f, 0f, -84.67f, 50.00f, false, 0);
-
+            Vector3 camCoors = new Vector3(GetConfig.Config["MainCamCoords"][0].ToObject<float>(), GetConfig.Config["MainCamCoords"][1].ToObject<float>(), GetConfig.Config["MainCamCoords"][2].ToObject<float>());
+            Vector4 camRotation = new Vector4(GetConfig.Config["MainCamRotations"][0].ToObject<float>(), GetConfig.Config["MainCamRotations"][1].ToObject<float>(), GetConfig.Config["MainCamRotations"][2].ToObject<float>(), GetConfig.Config["MainCamRotations"][3].ToObject<float>());
+            mainCamera = API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", camCoors.X, camCoors.Y, camCoors.Z, camRotation.X, camRotation.Y, camRotation.Z, camRotation.W, false, 0);
 
             API.SetCamActive(mainCamera, true);
 
@@ -198,10 +238,12 @@ namespace vorpcharacter_cl
 
         public async Task DrawInformation()
         {
+            Vector3 characterSelectionFinalCoords = new Vector3(GetConfig.Config["CharacterSelectionFinalCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionFinalCoords"][2].ToObject<float>());
+            Debug.WriteLine($"{characterSelectionFinalCoords.X}, {characterSelectionFinalCoords.Y}, {characterSelectionFinalCoords.Z}");
             while (isInCharacterSelector)
             {
                 //Финальная точка для света
-                API.DrawLightWithRange(CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 255, 255, 255, 8.0f, 250.0f);
+                API.DrawLightWithRange(characterSelectionFinalCoords.X, characterSelectionFinalCoords.Y, characterSelectionFinalCoords.Z, 255, 255, 255, 8.0f, 250.0f);
                 await Utils.Miscellanea.DrawTxt(GetConfig.Langs["PressSelectInfo"], 0.5f, 0.90f, 0.75f, 0.70f, 255, 255, 255, 255, true, false);
                 await Delay(0);
             }
@@ -227,7 +269,7 @@ namespace vorpcharacter_cl
 
                 TriggerEvent("vorpcharacter:loadPlayerSkin", json_skin, json_components);
                 API.DoScreenFadeOut(100); // It is necessary so that the world has time to load and the player does not have to see empty textures
-                //await Delay(800);
+                                          //await Delay(800);
                 API.SetCamActive(mainCamera, false);
                 API.DestroyCam(mainCamera, true);
                 API.RenderScriptCams(true, true, 1000, true, true, 0);
@@ -333,8 +375,6 @@ namespace vorpcharacter_cl
                     {
                         myChars.RemoveAt(selectedChar);
 
-                        Function.Call((Hash)0x7D6F58F69DA92530, CharacterSelectionFinalCoords.X, CharacterSelectionFinalCoords.Y, CharacterSelectionFinalCoords.Z, 26, 50.0f, true, false, true);
-
                         if (selectedChar == 0)
                         {
                             selectedChar = myChars.Count - 1;
@@ -350,7 +390,7 @@ namespace vorpcharacter_cl
 
                 await Delay(0);
             }
-            
+
         }
 
         public async Task LoadNpcComps(string skin_json, string cloths_json)
@@ -375,8 +415,10 @@ namespace vorpcharacter_cl
             uint model_hash = (uint)API.GetHashKey(skin["sex"]);
             await Utils.Miscellanea.LoadModel(model_hash);
             await Delay(500);
+
+            Vector3 characterSelectionStartCoords = new Vector3(GetConfig.Config["CharacterSelectionStartCoords"][0].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][1].ToObject<float>(), GetConfig.Config["CharacterSelectionStartCoords"][2].ToObject<float>());
             //ppid = API.CreatePed(model_hash, 1701.316f, 1512.134f, 146.87f, 116.70f, false, false, true, true); //Inside house
-            ppid = API.CreatePed(model_hash, CharacterSelectionStartCoords.X, CharacterSelectionStartCoords.Y, CharacterSelectionStartCoords.Z, 116.70f, false, false, true, true); //Inside house
+            ppid = API.CreatePed(model_hash, characterSelectionStartCoords.X, characterSelectionStartCoords.Y, characterSelectionStartCoords.Z, 116.70f, false, false, true, true); //Inside house
 
             Function.Call((Hash)0xCC8CA3E88256E58F, ppid, 0, 1, 1, 1, false);
 
