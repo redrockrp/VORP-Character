@@ -530,6 +530,8 @@ namespace vorpcharacter_cl
             CreateCharacter.toggleOverlayChange("grime", int.Parse(skin["grime_visibility"]), int.Parse(skin["grime_tx_id"]), 0, 0, 0, 1.0f, 0, 0, 0, 0, 0, 0, 1.0f);
             CreateCharacter.toggleOverlayChange("lipsticks", int.Parse(skin["lipsticks_visibility"]), int.Parse(skin["lipsticks_tx_id"]), 0, 0, 0, 1.0f, 0, int.Parse(skin["lipsticks_palette_id"]), int.Parse(skin["lipsticks_palette_color_primary"]), 0, 0, 0, 1.0f);
             CreateCharacter.toggleOverlayChange("shadows", int.Parse(skin["shadows_visibility"]), int.Parse(skin["shadows_tx_id"]), 0, 0, 0, 1.0f, 0, int.Parse(skin["shadows_palette_id"]), int.Parse(skin["shadows_palette_color_primary"]), 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("hair", int.Parse(skin["hair_visibility"]), int.Parse(skin["hair_tx_id"]), 0, 0, 0, 1.0f, 0, int.Parse(skin["hair_palette_id"]), 0, 0, 0, 0, 1.0f);
+            CreateCharacter.toggleOverlayChange("beardstabble", int.Parse(skin["beardstabble_visibility"]), int.Parse(skin["beardstabble_tx_id"]), 0, 0, 0, 1.0f, 0, int.Parse(skin["beardstabble_palette_id"]), 0, 0, 0, 0, 1.0f);
 
             await Delay(500);
             SetPlayerComponent(skin["sex"], 0x9925C067, "Hat", cloths);
